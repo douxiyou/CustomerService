@@ -12,7 +12,6 @@ import MessageUI from '../messages/Message.vue';
 import { Marked } from 'marked';
 import { markedHighlight } from "marked-highlight";
 import hljs from 'highlight.js';
-
 const marked = new Marked(markedHighlight({
     emptyLangClass: 'hljs',
     langPrefix: 'hljs language-',
@@ -21,34 +20,26 @@ const marked = new Marked(markedHighlight({
         return hljs.highlight(code, { language }).value;
     }
 }));
-
 marked.use({
     gfm: true,
 });
-
-
 const router = useRouter();
 const chatRef = ref<HTMLElement | null>(null)
 const showSettingPanel = ref(false)
 const title = ref("")
 const text = ref("")
-
 const isComposing = ref(false) // 是否正在输入中,防中文干扰
 const hasHandled = ref(false) // 是否已经处理过，防中文干扰
-
 let msgCount = 0
-
 const channelID = ref("") // 设置聊天的频道ID
 const p2p = ref(true) // 是否是单聊
 const to = ref(new Channel("", 0)) // 对方的频道信息
 const placeholder = ref("请输入对方登录名")
 const pulldowning = ref(false) // 下拉中
 const pulldownFinished = ref(false) // 下拉完成
-
 const startStreamMessage = ref(false) // 开始流消息
 const msgInputPlaceholder = ref("请输入消息")
 const streamNo = ref<string>() // 流消息序号
-
 const messages = ref<Message[]>(new Array<Message>())
 
 const uid = router.currentRoute.value.query.uid as string || undefined;
@@ -62,8 +53,6 @@ let messageStatusListener!: MessageStatusListener
 let eventListener!: WKEventListener // 事件监听
 
 onMounted(() => {
-
-
     if (!APIClient.shared.config.apiURL || APIClient.shared.config.apiURL === '') {
         WKSDK.shared().connectManager.disconnect()
         router.push({ path: '/' })

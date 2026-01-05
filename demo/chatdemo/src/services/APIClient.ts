@@ -1,4 +1,5 @@
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
+import type { AxiosResponse } from 'axios'
 import { Channel, ChannelTypePerson, Conversation, Message, SyncOptions, WKSDK } from "wukongimjssdk";
 import { Convert } from "./convert";
 import { Buffer } from "buffer";
@@ -10,7 +11,7 @@ import { Buffer } from "buffer";
 
 export class APIClientConfig {
     private _apiURL: string =""
-    private _token:string = ""
+    // private _token:string = ""
     tokenCallback?:()=>string|undefined
     // private _apiURL: string = "/api/v1/" // 正式打包用此地址
     
@@ -60,6 +61,7 @@ export default class APIClient {
                     if(self.logoutCallback) {
                         self.logoutCallback()
                     }
+										break;
                 default:
                     msg = "未知错误"
                     break;
@@ -183,6 +185,7 @@ export default class APIClient {
             channel_type: channel.channelType,
             unread: 0,
         }).then((res) => {
+	       console.log('清除未读::', res)
             // 这里uid指定的是自己，意味着如果是多端登录，其他端也会收到这条消息
             this.sendCMD(new Channel(WKSDK.shared().config.uid!,ChannelTypePerson),CMDType.CMDTypeClearUnread,channel)
         }).catch((err) => {
