@@ -29,23 +29,23 @@ const logout = () => {
 	router.push({ path: '/' })
 }
 onMounted(() => {
-	if (!APIClient.shared.config.apiURL || APIClient.shared.config.apiURL === '') {
-		WKSDK.shared().connectManager.disconnect()
-		router.push({ path: '/' })
-	}
-	// 获取IM的长连接地址
-	APIClient.shared.get('/route', {
-		param: { uid: router.currentRoute.value.query.uid }
-	}).then((res) => {
-		console.log(res)
-		let addr = res.wss_addr
-		if (!addr || addr === "") {
-			addr = res.ws_addr
-		}
-		connectIM(addr)
-	}).catch((err) => {
-		console.log(err)
-	})
+	// if (!APIClient.shared.config.apiURL || APIClient.shared.config.apiURL === '') {
+	// 	WKSDK.shared().connectManager.disconnect()
+	// 	router.push({ path: '/' })
+	// }
+	// // 获取IM的长连接地址
+	// APIClient.shared.get('/route', {
+	// 	param: { uid: router.currentRoute.value.query.uid }
+	// }).then((res) => {
+	// 	console.log(res)
+	// 	let addr = res.wss_addr
+	// 	if (!addr || addr === "") {
+	// 		addr = res.ws_addr
+	// 	}
+		connectIM('http://127.0.0.1:5200')
+	// }).catch((err) => {
+	// 	console.log(err)
+	// })
 })
 const handleStatusChange = (status: ConnectStatus, code?: number, connectionInfo?: ConnectionInfo) => {
 	console.log('连接信息', connectionInfo)

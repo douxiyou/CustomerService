@@ -13,6 +13,11 @@ const routes: Array<RouteRecordRaw> = [
 		name: 'Home',
 		component: () => import('../view/Home.vue'),
 	},
+  {
+    path: '/consult-customer-service',
+    name: 'ConsultCustomerService',
+    component: () => import('../view/ConsultCustomerService.vue'),
+  },
 	{
 		path: '/chat',
 		name: 'Chat',

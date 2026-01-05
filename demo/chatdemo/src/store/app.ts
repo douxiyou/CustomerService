@@ -33,7 +33,7 @@ export const useAppStore = defineStore('app', () => {
 		})
 	}
 	const login = () => {
-		guestApi('').then(res => {
+		guestApi('customer-service-user').then(res => {
 			console.log('登录', res)
 			token.value = res
 		}).catch(err => {

@@ -31,7 +31,7 @@ const handleLoginIM = () => {
 }
 const handleCustomer = () => {
 	appStore.handleRequestCustomer().then((res) => {
-		router.push({name: 'Chat'})
+		router.push({name: 'ConsultCustomerService'})
 	})
 }
 
