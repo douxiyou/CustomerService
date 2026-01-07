@@ -31,6 +31,7 @@ const handleLoginIM = () => {
 }
 const handleCustomer = () => {
 	appStore.handleRequestCustomer().then((res) => {
+		console.log('创建频道的结果', res)
 		router.push({name: 'ConsultCustomerService'})
 	})
 }

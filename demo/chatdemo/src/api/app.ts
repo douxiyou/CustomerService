@@ -12,7 +12,7 @@ export function refreshTokenApi(token: string) {
 	return chatHttp.post<TokenInterface, {refreshToken: string}>('/api/v1/user/refresh-token', {data:{ refreshToken: token }})
 }
 export function requestCustomerServiceApi() {
-	return chatHttp.post<{channel_id: string, status: string}, undefined>('/api/v1/im-service/create-session')
+	return chatHttp.post<{channel_id: string, channel_type: number, status: string}, undefined>('/api/v1/im-service/create-session')
 }
 export function loginIMApi() {
 	return chatHttp.post<{channel_id: string, status: string}, undefined>('/api/v1/im-service/login-im')

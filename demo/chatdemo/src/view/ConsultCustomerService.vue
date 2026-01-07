@@ -17,7 +17,7 @@ import {toast} from "vue-sonner";
 const router = useRouter()
 const title = ref("")
 const appStore = useAppStore()
-const to = ref(new Channel(appStore.channelId, ChannelTypePerson))
+const to = ref(appStore.channelInfo)
 const messages = ref<Message[]>(new Array<Message>())
 const text = ref("")
 const chatRef = ref<HTMLElement | null>(null)

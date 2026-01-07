@@ -2,6 +2,7 @@ import {defineStore} from "pinia";
 import {ref} from "vue";
 import {guestApi, loginIMApi, refreshTokenApi, requestCustomerServiceApi} from "@/api/app.ts";
 import {toast} from "vue-sonner";
+import {Channel} from "wukongimjssdk";
 
 export interface TokenInterface {
 	uuid : string
@@ -17,7 +18,7 @@ export const useAppStore = defineStore('app', () => {
 		refresh_token: '',
 		expires_in: 0,
 	})
-	const channelId = ref('')
+	const channelInfo = ref<Channel>()
 	const imLogined = ref(false)
 	const loginIM = () => {
 		return new Promise((resolve, reject) => {
@@ -57,9 +58,9 @@ export const useAppStore = defineStore('app', () => {
 		return new Promise((resolve, reject) => {
 			requestCustomerServiceApi().then(res => {
 				console.log(res)
-				const {channel_id, status} = res
+				const {channel_id, channel_type, status} = res
 				resolve(status)
-				channelId.value = channel_id
+				channelInfo.value =  new Channel(channel_id, channel_type)
 			}).catch(err => {
 				toast.error(err)
 				reject(err)
@@ -70,7 +71,7 @@ export const useAppStore = defineStore('app', () => {
 		token,
 		login,
 		loginIM,
-		channelId,
+		channelInfo,
 		handRefreshToken,
 		handleRequestCustomer,
 	}
