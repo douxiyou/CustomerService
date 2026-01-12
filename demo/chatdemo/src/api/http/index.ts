@@ -11,12 +11,31 @@ import type {
 } from "./types.d";
 import { stringify } from "qs";
 import {useAppStore} from "@/store/app.ts";
+
 /** 格式化token（jwt格式） */
 export const formatToken = (token: string): string => {
 	return "Bearer " + token;
 };
+
+// 从环境变量或默认值获取baseURL
+const getBaseURL = (): string => {
+  // 检查是否有全局配置的API地址
+  if (typeof window !== 'undefined' && (window as any).__CHAT_API_BASE_URL__) {
+    return (window as any).__CHAT_API_BASE_URL__;
+  }
+  
+  // 检查是否有环境变量
+  if (typeof process !== 'undefined' && process.env?.VUE_APP_API_BASE_URL) {
+    return process.env.VUE_APP_API_BASE_URL;
+  }
+  
+  // 默认值
+  return 'https://keep-mind.douxiyou.com';
+};
+
 // 相关配置请参考：www.axios-js.com/zh-cn/docs/#axios-request-config-1
 const defaultConfig: AxiosRequestConfig = {
+  baseURL: getBaseURL(),
   // 请求超时时间
   timeout: 10000,
   headers: {
@@ -186,6 +205,11 @@ class ChatHttp {
     config?: PureHttpRequestConfig
   ): Promise<T> {
     return this.request<T>("get", url, params, config);
+  }
+
+  // 添加一个方法用于动态更新baseURL
+  public setBaseURL(baseURL: string): void {
+    ChatHttp.axiosInstance.defaults.baseURL = baseURL;
   }
 }
 

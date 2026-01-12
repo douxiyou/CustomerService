@@ -2,10 +2,11 @@ version: '3.7'
 services:
   wukongim: # WuKongIM服务
     image: registry.cn-shanghai.aliyuncs.com/wukongim/wukongim:v2
+    container_name: wukongim
     environment:
       - "WK_CLUSTER_NODEID=1001"  
       - "WK_CLUSTER_SERVERADDR=xx.xx.xx.xx:11110" # 节点内部通信请求地址
-      - "WK_TRACE_PROMETHEUSAPIURL=http://prometheus:9090" # prometheus监控地址
+      # - "WK_TRACE_PROMETHEUSAPIURL=http://prometheus:9090" # prometheus监控地址
       - "WK_MODE=release" # release模式
       - "WK_EXTERNAL_IP=xxx.xxx.xxx.xxx" # 服务器外网ip
       - "WK_CLUSTER_APIURL=http://xx.xxx.xxx.xx:5001" # api的内网地址
@@ -25,9 +26,19 @@ services:
       - 5300:5300 # 管理端端口
       - 5172:5172 # demo端口
       - 11110:11110 # 分布式节点通讯端口
-  prometheus:  # 监控服务
-    image: registry.cn-shanghai.aliyuncs.com/wukongim/prometheus:v2.53.1
+  # prometheus:  # 监控服务
+  #   image: registry.cn-shanghai.aliyuncs.com/wukongim/prometheus:v2.53.1
+  #   volumes:
+  #     - "./prometheus.yml:/etc/prometheus/prometheus.yml"
+  #   ports:
+  #     - "9090:9090"
+  nginx:
+    image: nginx
+    container_name: nginx
     volumes:
-      - "./prometheus.yml:/etc/prometheus/prometheus.yml"
+    - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
     ports:
-      - "9090:9090"
+    - "8000:8000"
+    # environment:
+    # - NGINX_HOST=foobar.com
+    # - NGINX_PORT=80

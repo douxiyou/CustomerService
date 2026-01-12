@@ -42,7 +42,8 @@ onMounted(() => {
 	// 	if (!addr || addr === "") {
 	// 		addr = res.ws_addr
 	// 	}
-		connectIM('http://127.0.0.1:5200')
+	// 	connectIM('http://127.0.0.1:5200')
+		connectIM('wss://keep-mind.douxiyou.com/ws')
 	// }).catch((err) => {
 	// 	console.log(err)
 	// })
